@@ -20,6 +20,18 @@ export const getAllCustomers = async () => {
   });
 };
 
+export const getAllReferrals = async (cust_id?: number) => {
+  return prisma.lead.findMany({
+    where: cust_id
+      ? { referred_by: cust_id }
+      : { referred_by: { not: null } },
+  });
+};
+
+export const getAllCampaign = async () => {
+  return prisma.campaign.findMany();
+};
+
 export const getCustomerById = async (id: number) => {
   return prisma.customer.findUnique({
     where: { id },

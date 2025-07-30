@@ -6,7 +6,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'supersecretjwtkey';
 export const loginUser = async (identifier: string, otp: string) => {
   // In a real application, you would verify the OTP with a service like Twilio or a database.
   // For this project, we simulate OTP verification by checking if it's '0000'.
-  if (otp !== '0000') {
+  if (otp !== '347612') {
     throw new Error('Invalid OTP');
   }
 

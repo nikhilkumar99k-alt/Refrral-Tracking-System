@@ -5,6 +5,14 @@ export const getAllCustomers = async () => {
   return customerRepository.getAllCustomers();
 };
 
+export const getAllReffrals = async (cust_id:any) => {
+  return customerRepository.getAllReferrals(cust_id);
+};
+
+export const getAllCampaign = async () => {
+  return customerRepository.getAllCampaign();
+};
+
 export const createCustomerFromLead = async (lead: any, customerType: 'DCO' | 'FLEET_CUSTOMER', created_by: number) => {
   // Create auth entry for the customer
   // console.log(lead)
