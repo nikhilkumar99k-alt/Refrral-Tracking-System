@@ -48,7 +48,9 @@ export const getEmiSatus = async (req: AuthenticatedRequest, res: Response) => {
       throw new Error("cust_id is required");
     }
 
-    const campaign = await customerService.getEmiSatus(req.body.cust_id);
+    const is3Emi = req?.body?.is3rdEmi ?? false;
+
+    const campaign = await customerService.getEmiSatus(req.body.cust_id,is3Emi);
 
     res.status(200).json({
       campaign,

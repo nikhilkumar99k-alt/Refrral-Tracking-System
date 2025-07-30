@@ -1,5 +1,7 @@
 import * as customerRepository from '../repositories/customer.repository';
 import * as authRepository from '../../auth/repositories/auth.repository';
+import { processFirstReferralPayout, processSecondReferralPayout } from '../../referral/services/referral.service';
+import { error } from 'console';
 
 export const getAllCustomers = async () => {
   return customerRepository.getAllCustomers();
@@ -13,9 +15,19 @@ export const getAllCampaign = async () => {
   return customerRepository.getAllCampaign();
 };
 
-export const getEmiSatus = async (cust_id:number) => {
-  return customerRepository.getEmiSatus(cust_id);
+export const getEmiSatus = async (cust_id: number, is3rdEmi: boolean) => {
+  if (!is3rdEmi) {
+    await processFirstReferralPayout(cust_id);
+  } else {
+    const emi = await customerRepository.getEmiSatus(cust_id);
+    if (emi && emi.status) {
+      await processSecondReferralPayout(cust_id);
+    } else {
+      throw new Error("EMI status not completed yet.");
+    }
+  }
 };
+
 
 export const createCustomerFromLead = async (lead: any, customerType: 'DCO' | 'FLEET_CUSTOMER', created_by: number) => {
   // Create auth entry for the customer

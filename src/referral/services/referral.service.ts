@@ -101,7 +101,7 @@ export const processSecondReferralPayout = async (customerId: number) => {
     return { success: false, message: "Referrer customer not found" };
   }
   
-  if (isValidCust.first_payout == true) {
+  if (isValidCust.second_payout == true) {
     return { success: false, message: "Second payout already processed for this referrer" };
   }
 
