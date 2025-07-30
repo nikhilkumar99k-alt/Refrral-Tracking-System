@@ -39,14 +39,13 @@ export const getLeadById = async (id: number) => {
   });
 };
 
-export const updateLeadStatus = async (id: number, status: string) => {
+export const updateLeadStatus = async (id: number, status: string, referralStatus: ReferralStatus) => {
   // Assuming 'status' is part of the Lead model, though not explicitly defined in the provided schema.
   // For now, this function will just return the lead, as there's no direct 'status' field to update.
   // If a status field is added to the Lead model, this function should be updated accordingly.
   return prisma.lead.update({
     where: { id },
-    data: { source: status }, // Using 'source' as a placeholder for status update for now.
+    data: { source: status, referralStatus: referralStatus }, // Using 'source' as a placeholder for status update for now.
   });
 };
-
 

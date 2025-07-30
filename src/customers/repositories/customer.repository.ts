@@ -8,6 +8,8 @@ export const createCustomer = async (data: { authId: number; leadId: number; nam
   });
 };
 
+
+
 export const getAllCustomers = async () => {
   return prisma.customer.findMany({
     include: {

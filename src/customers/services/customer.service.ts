@@ -32,6 +32,7 @@ export const createCustomerFromLead = async (lead: any, customerType: 'DCO' | 'F
   });
 
 
+
   // Create wallet
   await customerRepository.createWallet(customer.id);
 

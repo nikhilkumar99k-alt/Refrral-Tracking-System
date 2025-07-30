@@ -140,7 +140,9 @@ export const processSecondReferralPayout = async (customerId: number) => {
   return { success: true, message: "Second referral payout of ₹2500 credited successfully" };
 };
 
-export const getReferralAnalytics = async () => {
+export const getReferralAnalytics = async (user?:any) => {
+  if(user?.cust_id)
+      return referralRepository.getReferralAnalyticsForCustomer(user.cust_id);
   return referralRepository.getReferralAnalytics();
 };
 

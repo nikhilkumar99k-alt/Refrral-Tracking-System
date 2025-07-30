@@ -1,6 +1,7 @@
 import * as leadRepository from '../repositories/lead.repository';
 import * as customerService from '../../customers/services/customer.service';
 import * as customerRepository from '../../customers/repositories/customer.repository';
+import { ReferralStatus } from '@prisma/client';
 
 
 export const addLead = async (data: {
@@ -52,7 +53,7 @@ export const moveLeadToCustomer = async (leadId: number, customerType: 'DCO' | '
   const customer = await customerService.createCustomerFromLead(lead, customerType, created_by);
 
   // Update lead status to "vehicle delivered"
-  await leadRepository.updateLeadStatus(leadId, 'vehicle delivered');
+  await leadRepository.updateLeadStatus(leadId, 'vehicle delivered', ReferralStatus.CONVERTED_TO_CUSTOMER);
 
   return customer;
 };

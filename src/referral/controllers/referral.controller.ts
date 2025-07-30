@@ -7,7 +7,7 @@ interface AuthenticatedRequest extends Request {
 
 export const getReferralAnalytics = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const analytics = await referralService.getReferralAnalytics();
+    const analytics = await referralService.getReferralAnalytics(req.user);
 
     res.status(200).json({
       analytics,
