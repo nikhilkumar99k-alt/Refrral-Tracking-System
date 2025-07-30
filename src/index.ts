@@ -13,6 +13,17 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    status: 'OK',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    environment: process.env.NODE_ENV || 'development',
+    version: process.env.npm_package_version || '1.0.0'
+  });
+});
+
 app.use('/auth', authRoutes);
 app.use('/leads', leadRoutes);
 app.use('/customers', customerRoutes);
@@ -25,7 +36,12 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log('🚀 Server started successfully!');
+  console.log(`📍 Server is running on port ${PORT}`);
+  console.log(`🏥 Health check available at: http://localhost:${PORT}/health`);
+  console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`⏰ Started at: ${new Date().toISOString()}`);
+  console.log('✅ All routes are ready to serve requests');
 });
 
 process.on('beforeExit', async () => {
