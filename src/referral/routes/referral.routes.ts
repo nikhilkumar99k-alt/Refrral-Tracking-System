@@ -4,7 +4,7 @@ import { authenticateToken, requireAdminRole } from '../../middleware/auth.middl
 
 const router = Router();
 
-router.get('/analytics', authenticateToken, requireAdminRole, referralController.getReferralAnalytics);
+router.get('/analytics', authenticateToken, referralController.getReferralAnalytics);
 router.post('/payout/first/:customerId', authenticateToken, requireAdminRole, referralController.processFirstReferralPayout);
 router.post('/payout/second/:customerId', authenticateToken, requireAdminRole, referralController.processSecondReferralPayout);
 
