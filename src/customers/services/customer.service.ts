@@ -1,7 +1,7 @@
 import * as customerRepository from '../repositories/customer.repository';
 import * as authRepository from '../../auth/repositories/auth.repository';
 import { processFirstReferralPayout, processSecondReferralPayout } from '../../referral/services/referral.service';
-import { error } from 'console';
+// import { error } from 'console';
 
 export const getAllCustomers = async () => {
   return customerRepository.getAllCustomers();

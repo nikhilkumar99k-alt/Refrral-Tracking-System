@@ -15,7 +15,7 @@ export const addLead = async (data: {
   campaign_id?: number;
 }) => {
 
-  console.log(data)
+  // console.log(data)
 
   let referred_by: number | null = null;
 
