@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import express from 'express';
+import cors from 'cors';
 import { PrismaClient } from '@prisma/client';
 import authRoutes from './auth/routes/auth.routes';
 import leadRoutes from './leads/routes/lead.routes';
@@ -13,6 +14,14 @@ import adminRoutes from './admin/routes/admin.routes';
 const app = express();
 const prisma = new PrismaClient();
 const PORT = process.env.PORT || 3000;
+
+// CORS configuration - allow all origins
+app.use(cors({
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  credentials: true
+}));
 
 app.use(express.json());
 
