@@ -1,0 +1,142 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Auth {
+  id        Int      @id @default(autoincrement())
+  name      String
+  phone     String   @unique
+  email     String   @unique
+  lastLogin DateTime @default(now())
+  role      Role     @default(CUSTOMER)
+  Customer  Customer? @relation("AuthToCustomer")
+  updated_at DateTime? @updatedAt
+}
+
+enum Role {
+  ADMIN
+  CUSTOMER
+}
+
+model Lead {
+  id         Int      @id @default(autoincrement())
+  name       String
+  phone      String   @unique
+  email      String   @unique
+  address    String
+  created_by Int
+  created_at DateTime @default(now())
+  updated_by Int?
+  updated_at DateTime @updatedAt
+  source     String
+  referred_by Int?
+  campaign_id      Int?
+  isActive   Boolean @default(true)
+  referralStatus  ReferralStatus? 
+  Customer   Customer[] @relation("LeadToCustomer")
+  campaign      Campaign?     @relation("CampaignToLead", fields: [campaign_id], references: [id])
+}
+
+enum CustomerType {
+  DCO
+  FLEET_CUSTOMER
+}
+
+enum ReferralStatus {
+  IN_PROGRESS
+  REJECTED
+  CONVERTED_TO_CUSTOMER
+}
+
+model Customer {
+  id            Int          @id @default(autoincrement())
+  authId        Int          @unique
+  leadId        Int?
+  name          String
+  phone         String       @unique
+  email         String       @unique
+  address       String
+  customer_type CustomerType
+  created_by    Int
+  created_at    DateTime     @default(now())
+  updated_by    Int?
+  updated_at    DateTime     @updatedAt
+  referred_by   Int?
+  refer_code    String       @unique
+  first_payout Boolean       @default(false)
+  second_payout Boolean       @default(false)
+  campaign_id      Int?
+  Auth          Auth?         @relation("AuthToCustomer", fields: [authId], references: [id])
+  Lead          Lead?         @relation("LeadToCustomer", fields: [leadId], references: [id])
+  campaign      Campaign?     @relation("CampaignToCustomer", fields: [campaign_id], references: [id])
+  Vehicle       Vehicle[]
+  ScheduledEmi  ScheduledEmi[]
+  Wallet        Wallet?
+  transactions  Transaction[]
+}
+
+model Vehicle {
+  vehicle_id Int      @id @default(autoincrement())
+  cust_id    Int
+  Customer   Customer @relation(fields: [cust_id], references: [id])
+}
+
+model ScheduledEmi {
+  id          Int      @id @default(autoincrement())
+  customer_id Int
+  due_date    DateTime
+  paid_date   DateTime?
+  status      EmiStatus @default(NOT_COMPLETED)
+  week_count  Int
+  Customer    Customer @relation(fields: [customer_id], references: [id])
+}
+
+enum EmiStatus {
+  COMPLETED
+  NOT_COMPLETED
+}
+
+model Wallet {
+  id      Int      @id @default(autoincrement())
+  user_id Int      @unique
+  balance Float
+  Customer Customer @relation(fields: [user_id], references: [id])
+}
+
+model Transaction {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  amount     Float
+  type       TransactionType
+  source     TransactionSource? @default(OTHER)
+  reason     String
+  created_at DateTime @default(now())
+  Customer   Customer @relation(fields: [user_id], references: [id])
+}
+
+enum TransactionType {
+  CREDIT
+  DEBIT
+}
+
+enum TransactionSource {
+  EMI
+  REFRRAL
+  OTHER
+}
+
+model Campaign {
+  id         Int       @id @default(autoincrement())
+  content    String
+  start_date DateTime
+  end_date   DateTime
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  customers  Customer[]  @relation("CampaignToCustomer")
+  leads      Lead[]    @relation("CampaignToLead")
+}
