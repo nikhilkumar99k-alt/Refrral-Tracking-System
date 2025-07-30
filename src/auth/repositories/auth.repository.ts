@@ -4,6 +4,9 @@ const prisma = new PrismaClient();
 
 export const findUserByEmailOrPhone = async (identifier: string) => {
   return prisma.auth.findFirst({
+    include:{
+      Customer: true,
+    },
     where: {
       OR: [
         { email: identifier },

@@ -4,7 +4,7 @@ import { authenticateToken } from '../../middleware/auth.middleware';
 
 const router = Router();
 
-router.post('/add', authenticateToken, leadController.addLead);
+router.post('/add', leadController.addLead);
 router.get('/all', authenticateToken, leadController.getAllLeads);
 router.post('/move-to-customer', authenticateToken, leadController.moveLeadToCustomer);
 

@@ -19,7 +19,7 @@ export const addLead = async (req: AuthenticatedRequest, res: Response) => {
       email,
       address,
       source,
-      created_by: req.user.id,
+      created_by: req?.user?.id || 0,
       reffralCode,
       campaign_id,
     };
