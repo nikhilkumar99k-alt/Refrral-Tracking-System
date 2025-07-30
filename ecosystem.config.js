@@ -10,11 +10,13 @@ module.exports = {
       env: {
         NODE_ENV: "development",
         PORT: 3000,
+        HTTPS_PORT: 3443,
         DATABASE_URL: process.env.DATABASE_URL,
       },
       env_production: {
         NODE_ENV: "production",
         PORT: 3000,
+        HTTPS_PORT: 3443,
         DATABASE_URL: process.env.DATABASE_URL,
       },
       error_file: "./logs/err.log",
