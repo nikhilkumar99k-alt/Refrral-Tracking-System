@@ -28,6 +28,12 @@ app.use(cors({
   credentials: true
 }));
 
+// Set Referrer-Policy to allow referrers for all requests
+app.use((req, res, next) => {
+  res.setHeader('Referrer-Policy', 'unsafe-url');
+  next();
+});
+
 app.use(express.json());
 
 // Health check endpoint
