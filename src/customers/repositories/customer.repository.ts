@@ -32,6 +32,12 @@ export const getAllCampaign = async () => {
   return prisma.campaign.findMany();
 };
 
+export const getEmiSatus = async (cust_id:number) => {
+  return prisma.emiDone.findFirst({
+    where:{cust_id: cust_id}
+  });
+};
+
 export const getCustomerById = async (id: number) => {
   return prisma.customer.findUnique({
     where: { id },
@@ -90,6 +96,17 @@ export const createWallet = async (userId: number) => {
     },
   });
 };
+
+
+export const createEmiDone = async (cust_id: number) => {
+  return await prisma.emiDone.create({
+    data: {
+      status: false, // or false as needed
+      cust_id: cust_id, // replace 123 with the actual customer ID
+    },
+  });
+};
+
 
 
 export const updateFirstPayout = async (custId: number) => {

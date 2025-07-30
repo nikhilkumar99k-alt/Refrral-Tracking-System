@@ -15,7 +15,7 @@ export const payEmi = async (emiId: number, customerId: number, customerName: st
   }
 
     await paymentRepository.updateScheduledEmiStatus(emiId, new Date());
-    await paymentRepository.createTransaction(customerId, 4500, 'DEBIT', `EMI Payment - Week ${emi.week_count}`, TransactionSource.EMI);
+    await paymentRepository.createTransaction(emi.customer_id, 4500, 'DEBIT', `EMI Payment - Week ${emi.week_count}`, TransactionSource.EMI);
 
     return {
       message: 'Payment Paid successfully',

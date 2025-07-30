@@ -77,6 +77,7 @@ model Customer {
   Vehicle       Vehicle[]
   ScheduledEmi  ScheduledEmi[]
   Wallet        Wallet?
+  EmiDone       EmiDone?    @relation("EmiDoneToCustomer")
   transactions  Transaction[]
 }
 
@@ -139,4 +140,11 @@ model Campaign {
   updated_at DateTime  @updatedAt
   customers  Customer[]  @relation("CampaignToCustomer")
   leads      Lead[]    @relation("CampaignToLead")
+}
+
+model EmiDone {
+  id        Int       @id @default(autoincrement())
+  cust_id   Int?      @unique
+  customer  Customer? @relation("EmiDoneToCustomer", fields: [cust_id], references: [id])
+  status    Boolean   @default(false)
 }

@@ -40,3 +40,20 @@ export const getAllCampaign = async (req: AuthenticatedRequest, res: Response) =
     res.status(500).json({ error: error.message });
   }
 };
+
+
+export const getEmiSatus = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    if (!req?.body?.cust_id) {
+      throw new Error("cust_id is required");
+    }
+
+    const campaign = await customerService.getEmiSatus(req.body.cust_id);
+
+    res.status(200).json({
+      campaign,
+    });
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+};

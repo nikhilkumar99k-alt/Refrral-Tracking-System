@@ -105,22 +105,22 @@ export const processSecondReferralPayout = async (customerId: number) => {
     return { success: false, message: "Second payout already processed for this referrer" };
   }
 
-  // Check if first 3 EMIs are paid on time
-  const emiPayments = await referralRepository.getCustomerEmiPayments(customerId);
-  const firstThreeEmis = emiPayments.slice(0, 3);
+  // // Check if first 3 EMIs are paid on time
+  // const emiPayments = await referralRepository.getCustomerEmiPayments(customerId);
+  // const firstThreeEmis = emiPayments.slice(0, 3);
 
-  if (firstThreeEmis.length < 3) {
-    return { success: false, message: "Customer has not completed first 3 EMI payments yet" };
-  }
+  // if (firstThreeEmis.length < 3) {
+  //   return { success: false, message: "Customer has not completed first 3 EMI payments yet" };
+  // }
   
-  // Check if all were paid on or before due date
-  const allPaidOnTime = firstThreeEmis.every(emi => {
-    return emi.paid_date && emi.paid_date <= emi.due_date;
-  });
+  // // Check if all were paid on or before due date
+  // const allPaidOnTime = firstThreeEmis.every(emi => {
+  //   return emi.paid_date && emi.paid_date <= emi.due_date;
+  // });
 
-  if (!allPaidOnTime){
-    return { success: false, message: "Not all of the first 3 EMIs were paid on time" };
-  }
+  // if (!allPaidOnTime){
+  //   return { success: false, message: "Not all of the first 3 EMIs were paid on time" };
+  // }
   
   // Credit additional ₹2500 to referrer's wallet
   let currentWallet = await prisma.wallet.findUnique({

@@ -13,6 +13,10 @@ export const getAllCampaign = async () => {
   return customerRepository.getAllCampaign();
 };
 
+export const getEmiSatus = async (cust_id:number) => {
+  return customerRepository.getEmiSatus(cust_id);
+};
+
 export const createCustomerFromLead = async (lead: any, customerType: 'DCO' | 'FLEET_CUSTOMER', created_by: number) => {
   // Create auth entry for the customer
   // console.log(lead)
@@ -43,6 +47,9 @@ export const createCustomerFromLead = async (lead: any, customerType: 'DCO' | 'F
 
   // Create wallet
   await customerRepository.createWallet(customer.id);
+
+
+    await customerRepository.createEmiDone(customer.id);
 
   // Determine number of vehicles based on customer type
   const numberOfVehicles = customerType === 'DCO' ? 1 : 1; // Default to 1, can be modified for FLEET_CUSTOMER
