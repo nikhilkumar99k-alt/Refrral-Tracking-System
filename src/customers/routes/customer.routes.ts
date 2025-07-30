@@ -7,7 +7,7 @@ const router = Router();
 router.get('/all', authenticateToken, customerController.getAllCustomers);
 router.get('/all-reffrals', authenticateToken, customerController.getAllReffrals);
 router.get('/campaign', authenticateToken, customerController.getAllCampaign);
-router.get('/check-emi-status', authenticateToken, requireAdminRole,  customerController.getEmiSatus);
+router.post('/check-emi-status', authenticateToken, requireAdminRole,  customerController.getEmiSatus);
 
 
 export default router;

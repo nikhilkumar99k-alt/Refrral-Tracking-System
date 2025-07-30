@@ -17,11 +17,11 @@ export const getAllCampaign = async () => {
 
 export const getEmiSatus = async (cust_id: number, is3rdEmi: boolean) => {
   if (!is3rdEmi) {
-    await processFirstReferralPayout(cust_id);
+    return await processFirstReferralPayout(cust_id);
   } else {
     const emi = await customerRepository.getEmiSatus(cust_id);
     if (emi && emi.status) {
-      await processSecondReferralPayout(cust_id);
+      return await processSecondReferralPayout(cust_id);
     } else {
       throw new Error("EMI status not completed yet.");
     }

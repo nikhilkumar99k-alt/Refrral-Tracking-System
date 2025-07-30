@@ -50,10 +50,10 @@ export const getEmiSatus = async (req: AuthenticatedRequest, res: Response) => {
 
     const is3Emi = req?.body?.is3rdEmi ?? false;
 
-    const campaign = await customerService.getEmiSatus(req.body.cust_id,is3Emi);
+    const satus = await customerService.getEmiSatus(req.body.cust_id,is3Emi);
 
     res.status(200).json({
-      campaign,
+      satus,
     });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
