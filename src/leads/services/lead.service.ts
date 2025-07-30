@@ -11,14 +11,17 @@ export const addLead = async (data: {
   address: string;
   created_by: number;
   source: string;
-  reffralCode?: string;
+  referralCode?: string;
   campaign_id?: number;
 }) => {
+
+  console.log(data)
+
   let referred_by: number | null = null;
 
   // Get referrer customer ID if referral code is provided
-  if (data.reffralCode) {
-    const referrer = await customerRepository.getCustomerByReferralCode(data.reffralCode);
+  if (data.referralCode) {
+    const referrer = await customerRepository.getCustomerByReferralCode(data.referralCode);
     if (referrer) {
       referred_by = referrer.id;
     }

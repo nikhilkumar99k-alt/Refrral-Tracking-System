@@ -7,8 +7,7 @@ interface AuthenticatedRequest extends Request {
 
 export const addLead = async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const { name, phone, email, address, source, reffralCode, campaign_id } = req.body;
-
+    const { name, phone, email, address, source, referralCode, campaign_id } = req.body;
     if (!name || !phone || !email || !address || !source) {
       return res.status(400).json({ error: 'Name, phone, email, address, and source are required' });
     }
@@ -20,7 +19,7 @@ export const addLead = async (req: AuthenticatedRequest, res: Response) => {
       address,
       source,
       created_by: req?.user?.id || 0,
-      reffralCode,
+      referralCode,
       campaign_id,
     };
 

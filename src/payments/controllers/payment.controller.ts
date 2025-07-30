@@ -72,3 +72,13 @@ export const updateWallet = async (req: AuthenticatedRequest, res: Response) => 
   }
 };
 
+export const fetchAllTran = async (req: AuthenticatedRequest, res: Response) => {
+  try {
+    const cust_id= req?.user?.cust_id;
+
+    return await paymentService.fetchAllTran(cust_id);
+
+  } catch (error: any) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};

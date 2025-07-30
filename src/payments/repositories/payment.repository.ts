@@ -85,3 +85,22 @@ export const updateWalletAndCreateTransaction = async (userId: number, amount: n
     transaction,
   };
 };
+
+
+export const fetchAllTran = async (cust_id?: number) => {
+  try {
+    const where = cust_id ? { user_id: cust_id } : {};
+
+    const transactions = await prisma.transaction.findMany({ where });
+
+    return {
+      success: true,
+      data: transactions,
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.message || 'Failed to fetch transactions',
+    };
+  }
+};

@@ -12,7 +12,7 @@ export const createLead = async (leadData: {
   referred_by?: number | null;
   campaign_id?: number | null;
 }) => {
-  return prisma.lead.create({
+  return await prisma.lead.create({
     data: {
       name: leadData.name,
       phone: leadData.phone,

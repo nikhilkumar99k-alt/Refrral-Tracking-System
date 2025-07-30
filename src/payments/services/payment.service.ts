@@ -56,3 +56,16 @@ export const updateWallet = async (userId: number, amount: number, type: 'CREDIT
     };
   }
 };
+
+
+export const fetchAllTran = async (cust_id?:number) => {
+  try {
+    const result = await paymentRepository.fetchAllTran(cust_id);
+    
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.message || 'Failed to update wallet',
+    };
+  }
+};
